@@ -1,4 +1,4 @@
-# digitalfix-ms-notificaciones
+# ms-digitalfix-notify
 
 **Proyecto:** DigitalFix - Gestion de ordenes de trabajo para una red de 20 empresas de mantenimiento electrico  
 **Componente:** Microservicio  
@@ -24,13 +24,21 @@ Spring Boot 3, RabbitMQ (3 colas + 3 DLQ), Thymeleaf, OpenPDF
 ## Repositorios del proyecto
 
 - [`digitalfix-frontend`](https://github.com/khrojasdev/digitalfix-frontend) - Frontend
-- [`digitalfix-bff`](https://github.com/khrojasdev/digitalfix-bff) - BFF / API interna
-- [`digitalfix-ms-catalogo`](https://github.com/khrojasdev/digitalfix-ms-catalogo) - Microservicio
-- [`digitalfix-ms-ordenes`](https://github.com/khrojasdev/digitalfix-ms-ordenes) - Microservicio
-- [`digitalfix-ms-notificaciones`](https://github.com/khrojasdev/digitalfix-ms-notificaciones) - Microservicio **(este)**
-- [`digitalfix-ms-reportes`](https://github.com/khrojasdev/digitalfix-ms-reportes) - Microservicio
-- [`digitalfix-ms-auditoria`](https://github.com/khrojasdev/digitalfix-ms-auditoria) - Microservicio
+- [`ms-digitalfix-bff`](https://github.com/khrojasdev/ms-digitalfix-bff) - BFF / API interna
+- [`ms-digitalfix-usuarios`](https://github.com/khrojasdev/ms-digitalfix-usuarios) - Microservicio
+- [`ms-digitalfix-catalog`](https://github.com/khrojasdev/ms-digitalfix-catalog) - Microservicio
+- [`ms-digitalfix-workorders`](https://github.com/khrojasdev/ms-digitalfix-workorders) - Microservicio
+- [`ms-digitalfix-notify`](https://github.com/khrojasdev/ms-digitalfix-notify) - Microservicio **(este)**
+- [`ms-digitalfix-report`](https://github.com/khrojasdev/ms-digitalfix-report) - Microservicio
+- [`ms-digitalfix-audit`](https://github.com/khrojasdev/ms-digitalfix-audit) - Microservicio
 - [`digitalfix-infra`](https://github.com/khrojasdev/digitalfix-infra) - Infraestructura
+
+## Pendiente por definir
+
+El documento del caso pide ademas *un microservicio administrador de RabbitMQ y otro de
+Kafka, segun la pauta de cada evaluacion*. Ni la EP1 ni la EP2 los evaluan, asi que no
+existen todavia como repositorios. Cuando la pauta de la evaluacion final los exija se
+agregaran como `ms-digitalfix-rabbit` y `ms-digitalfix-kafka`. La decision del equipo fue esperar la pauta.
 
 ## Tablero
 
