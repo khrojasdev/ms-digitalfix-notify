@@ -12,12 +12,13 @@ mensajeria, junto a `audit` y `report`.
 
 ## Mensajeria (RabbitMQ)
 
-| Elemento | Nombre | Tipo |
-|---|---|---|
-| Exchange | `ordenes.negocio.exchange` | topic (compartido) |
-| Cola | `ordenes.avisos.queue` | durable |
-| DLQ | `ordenes.avisos.dlq` | durable |
-| Routing key | `ordenes.eventos.*` | |
+notify consume de dos exchanges distintos: los eventos de orden (topic) y las
+alertas de stock de catalog (direct).
+
+| Origen | Exchange | Tipo | Cola | DLQ | Routing key |
+|---|---|---|---|---|---|
+| Eventos de orden | `ordenes.negocio.exchange` | topic | `ordenes.avisos.queue` | `ordenes.avisos.dlq` | `ordenes.eventos.*` |
+| Alertas de stock | `catalogo.stock.exchange` | direct | `notify.stock.queue` | `notify.stock.dlq` | `stock.bajo-minimo` |
 
 - Toda la nomenclatura esta centralizada en `application.yml` bajo `amqp.*`;
   ningun nombre se escribe a mano en el codigo.
@@ -33,7 +34,8 @@ mensajeria, junto a `audit` y `report`.
 
 | Metodo | Ruta | Descripcion |
 |---|---|---|
-| GET | `/api/avisos` | Avisos recientes generados (demo del consumo) |
+| GET | `/api/avisos` | Avisos de cambio de estado recientes |
+| GET | `/api/avisos/stock` | Avisos de stock bajo minimo recientes |
 | GET | `/actuator/health` | Estado del servicio |
 
 ## Tecnologias

@@ -16,11 +16,15 @@ spring:
 amqp:
   exchange:
     negocio: ordenes.negocio.exchange
+    stock: catalogo.stock.exchange
   queue:
     avisos: ordenes.avisos.queue
     avisos-dlq: ordenes.avisos.dlq
+    stock: notify.stock.queue
+    stock-dlq: notify.stock.dlq
   routing-key:
     avisos: ordenes.eventos.*
+    stock-bajo-minimo: stock.bajo-minimo
 
 server:
   port: ${PUERTO:8084}
