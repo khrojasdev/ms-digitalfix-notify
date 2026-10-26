@@ -27,10 +27,13 @@ public class AvisoEventoConsumer {
     private static final Logger log = LoggerFactory.getLogger(AvisoEventoConsumer.class);
 
     private final AvisoService avisoService;
+    private final TicketDespachoService ticketDespachoService;
     private final ObjectMapper objectMapper;
 
-    public AvisoEventoConsumer(AvisoService avisoService, ObjectMapper objectMapper) {
+    public AvisoEventoConsumer(AvisoService avisoService, TicketDespachoService ticketDespachoService,
+                               ObjectMapper objectMapper) {
         this.avisoService = avisoService;
+        this.ticketDespachoService = ticketDespachoService;
         this.objectMapper = objectMapper;
     }
 
@@ -40,7 +43,9 @@ public class AvisoEventoConsumer {
                                @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
         try {
             OrdenEventoDto evento = objectMapper.readValue(mensajeJson, OrdenEventoDto.class);
+            // Aviso al cliente y, si es una asignacion, ticket de despacho al tecnico.
             avisoService.generarAviso(evento);
+            ticketDespachoService.alAsignar(evento);
 
             // Confirmacion manual de exito.
             channel.basicAck(tag, false);

@@ -22,10 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * aviso generado, de modo que la configuracion de mensajeria quede totalmente
  * separada de la logica de dominio (exigencia de la pauta).
  *
- * En esta entrega los avisos se registran en log y se guardan en memoria para
- * poder consultarlos por la API y demostrar el consumo. El envio real por
- * correo y la generacion de PDF (ticket e informe) se incorporan en la
- * siguiente entrega.
+ * Los avisos son para el cliente que creo la orden. Se registran en log y se
+ * guardan en memoria para consultarlos por la API. El ticket de despacho al
+ * tecnico lo arma TicketDespachoService.
  */
 @Service
 public class AvisoService {
@@ -71,17 +70,33 @@ public class AvisoService {
         }
     }
 
-    /** Traduce el tipo de evento a un texto entendible para la persona. */
+    /** Traduce el tipo de evento a un texto entendible para el cliente. */
     private String redactarMensaje(OrdenEventoDto evento) {
         String tipo = evento.tipoEvento() == null ? "" : evento.tipoEvento();
+        String orden = "la orden #" + evento.ordenId();
+        String tecnico = tieneTexto(evento.tecnicoNombre()) ? evento.tecnicoNombre() : null;
         return switch (tipo) {
-            case "CREADA"    -> "Se creo la orden #" + evento.ordenId() + ".";
-            case "ASIGNADA"  -> "La orden #" + evento.ordenId() + " fue asignada a un tecnico.";
-            case "INICIADA"  -> "Comenzo la atencion de la orden #" + evento.ordenId() + ".";
-            case "CERRADA"   -> "La orden #" + evento.ordenId() + " fue cerrada.";
-            case "CANCELADA" -> "La orden #" + evento.ordenId() + " fue cancelada.";
-            default          -> "La orden #" + evento.ordenId() + " cambio de estado (" + tipo + ").";
+            case "CREADA" -> "Se creo " + orden + ".";
+            case "ASIGNADA" -> tecnico == null
+                    ? capitalizar(orden) + " fue asignada a un tecnico."
+                    : capitalizar(orden) + (evento.esReasignacion() ? " fue reasignada a " : " fue asignada a ")
+                            + tecnico + ".";
+            case "EN_DESPLAZAMIENTO" -> tecnico == null
+                    ? "El tecnico va en camino para " + orden + "."
+                    : "El tecnico " + tecnico + " va en camino para " + orden + ".";
+            case "EN_EJECUCION", "INICIADA" -> "Comenzo la atencion de " + orden + ".";
+            case "CERRADA" -> capitalizar(orden) + " fue cerrada.";
+            case "CANCELADA" -> capitalizar(orden) + " fue cancelada.";
+            default -> capitalizar(orden) + " cambio de estado (" + tipo + ").";
         };
+    }
+
+    private static boolean tieneTexto(String texto) {
+        return texto != null && !texto.isBlank();
+    }
+
+    private static String capitalizar(String texto) {
+        return Character.toUpperCase(texto.charAt(0)) + texto.substring(1);
     }
 
     /** Avisos recientes, del mas nuevo al mas antiguo. */
