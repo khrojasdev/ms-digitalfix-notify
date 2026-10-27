@@ -49,6 +49,10 @@ public class AvisoService {
         }
 
         String mensaje = redactarMensaje(evento);
+        if (tieneTexto(evento.nota())) {
+            // El cliente tambien se entera de lo que anoto el tecnico o el supervisor.
+            mensaje = mensaje + " Comentario: " + evento.nota().trim();
+        }
 
         AvisoDto aviso = new AvisoDto(
                 evento.ordenId(),
