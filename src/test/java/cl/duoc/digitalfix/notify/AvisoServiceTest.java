@@ -59,7 +59,7 @@ class AvisoServiceTest {
     private OrdenEventoDto conTecnico(String eventKey, String tipo, String anterior) {
         return new OrdenEventoDto(eventKey, tipo, 400L, "oid-sup", 7L, LocalDateTime.of(2026, 10, 26, 9, 0),
                 "corr-2", anterior, tipo, 3L, "oid-cliente", "No enciende", 5L, "Pedro Soto",
-                "pedro@digitalfix.cl", "+56911112222");
+                "pedro@digitalfix.cl", "+56911112222", null);
     }
 
     @Test

@@ -33,13 +33,14 @@ public record OrdenEventoDto(
         Long tecnicoId,
         String tecnicoNombre,
         String tecnicoEmail,
-        String tecnicoTelefono
+        String tecnicoTelefono,
+        String nota            // comentario opcional de quien cambio el estado
 ) {
     /** Evento sin datos de tecnico (formato anterior). */
     public OrdenEventoDto(String eventKey, String tipoEvento, Long ordenId, String autorId,
                           Long empresaId, LocalDateTime fecha, String correlacionId) {
         this(eventKey, tipoEvento, ordenId, autorId, empresaId, fecha, correlacionId,
-                null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null);
     }
 
     /** Es una reasignacion: la orden ya estaba ASIGNADA y cambio de tecnico. */

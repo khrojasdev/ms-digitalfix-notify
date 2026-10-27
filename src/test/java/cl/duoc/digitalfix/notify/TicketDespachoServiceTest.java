@@ -15,7 +15,7 @@ class TicketDespachoServiceTest {
     private OrdenEventoDto evento(String eventKey, String tipo, String anterior, Long empresa, String email) {
         return new OrdenEventoDto(eventKey, tipo, 42L, "oid-sup", empresa, LocalDateTime.of(2026, 10, 26, 9, 30),
                 "corr", anterior, tipo, 3L, "oid-cliente", "Router sin senal", 5L, "Pedro Soto",
-                email, "+56911112222");
+                email, "+56911112222", null);
     }
 
     @Test
